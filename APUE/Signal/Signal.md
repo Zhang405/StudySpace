@@ -9,7 +9,7 @@
 - kill -l
 ## signal()
 - `void (*signal(int signum,void (*func)(int)))(int)`
-
+![](https://i.loli.net/2021/10/14/mEgLuhU61bWIJpF.png)
 ~~~ c
 void test(int sig){};
 
