@@ -34,13 +34,24 @@ void (*signal(int sig,test))(int){};
 >可重入是怎么实现的？
 ## 信号的响应过程(重要)
 **信号从收到到响应有不可避免的延时**
+标准信号的响应没有严格的顺序
+
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210213182415635.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0ODA3Nzk2,size_16,color_FFFFFF,t_70#pic_center)
 
 
 
 ## 信号的常用函数
 - kill() **不是用来杀死进程的，是用来发送信号的，只不过大多数信号有杀死进程的作用**
+函数原型：int kill(pid_t pid, int sig);
+参数pid_t分为一下几种情况：
+1>pid为正数：向指定pid的进程发信号
+2>pid等于0：向调用kill的进程所在组的所有进程发信号(组内广播)
+3>pid等于-1：向kill的调用者进程所有有权限对其发信号的进程发送信号，但除了init进程（pid = 1）(全局广播)
+4>pid小于-1：对pgid = abs（pid）的组内所有进程发送信号
 
+参数sig：
+sig = 0：没有信号，但是会检错，用来检测进程或进程组是否存在
 ~~~ c
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,6 +73,7 @@ int main()
 ~~~
 
 - raise() 等价与`kill(getpid(), sig);`
+给当前进程或线程发信号
 - **alarm()**
 - pause 人为制造的阻塞系统调用 等待一个信号来打断它
 
