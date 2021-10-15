@@ -176,7 +176,7 @@ main:
 	cmpl	$0, loop(%rip)
 	je	.L3
 .L4:
-	jmp	.L4
+	jmp	.L4   //未进行检查值
 .L3:
 	movl	$0, %esi
 	leaq	.LC0(%rip), %rdi
