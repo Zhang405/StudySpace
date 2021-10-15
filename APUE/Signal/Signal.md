@@ -87,7 +87,7 @@ int main()
 
 //使用 信号 计算当前单核 累加 的速度
 
-static int loop = 1;
+static /*volatile*/ int loop = 1;
 
 static void handler(int sig){
     loop = 0;
@@ -154,6 +154,7 @@ main:
 #### volatile 关键字
 **去到这个变量真正的存储空间取数值，而不是根据局部结构判断取值**
 
+**下面在视频中提到的由于优化产生的错误，在我的gcc9.3版本中并没有重现**
 ~~~ bash
 gcc 5sec_sig.c -O1
 ./a.out         //不会有返回的 进入死循环
@@ -437,7 +438,7 @@ int main(int argc,char** argv)
         //要是读到结尾没用完token
         if (size - len > 0){
             mytbf_returntoken(tbf,size-len);
-        }
+        }  
 
         //以防写入不足
         while(len > 0){
