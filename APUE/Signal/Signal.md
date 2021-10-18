@@ -211,6 +211,21 @@ static volatile int loop = 1;
 ~~~
 
 
+
+#### 流控算法
+实现流量控制的slowcat,通过漏桶实现,即无则等待,有则按给定量传输。
+```c
+
+
+int main()
+{
+    
+}
+
+```
+
+
+
 #### 令牌桶(优化后的流控算法)
 ~~~ c
 #ifndef MYTBF_H__
