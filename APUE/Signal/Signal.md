@@ -76,7 +76,7 @@ int main()
 给当前进程或线程发信号
 - **alarm()**
 - pause 人为制造的阻塞系统调用 等待一个信号来打断它
-
+- sleep:在某些环境下，sleep是有alarm+pause封装的，在此情况下，如果编码者写的程序中有alarm，可能会造成始终的紊乱而出现错误，故尽量少用sleep。一些使用nanosleep封装的则没有这种问题。
 ~~~ c
 //5sec_sig.c
 #include <stdio.h>
@@ -227,6 +227,7 @@ int main()
 
 
 #### 令牌桶(优化后的流控算法)
+积攒token，有能力一次处理一部分数据的激增。
 ~~~ c
 #ifndef MYTBF_H__
 #define MYTBF_H__
