@@ -97,6 +97,8 @@ static void mod_load(){
         perror("setitimer()");
         exit(1);
     }
+
+    //借助钩子函数，在进程结束时调用mod_unload
     atexit(mod_unload);
 }
 

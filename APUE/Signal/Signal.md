@@ -480,7 +480,9 @@ int main(int argc,char** argv)
 
 ~~~
 
-- setitimer() 更灵活 **而且误差不累积**
+- setitimer() 更灵活 **而且误差不累积**，alarm()只能一秒为单位设置时钟
+![](https://i.loli.net/2021/10/19/NIqAxPJuUwsRzKe.png)
+当it_value的值衰减为0时，it_interval的值赋给it_value，这个赋值是原子的。
 ~~~ c
 //信号处理函数
 static void handler(int sig){
@@ -529,20 +531,22 @@ static void mod_unload(){
 }
 
 ~~~
-- abort
+- abort()
+认为制造异常，杀掉当前进程
 - system()
-
-	- **在有信号参与的程序当中，要阻塞住一个信号，要忽略调两个信号 这样system()才能正常使用**
+**在有信号参与的程序当中，要阻塞住一个信号，要忽略调两个信号 这样system()才能正常使用**
+![](https://i.loli.net/2021/10/19/eWFkdrhE5JxXiV8.png)
 
 #### sleep的缺陷
-
 **在某些平台，`sleep()`是使用`alarm`+`pause`封装的，而程序中出现多于1个的`alarm`alarm将失效**
+可替换的函数：nanosleep()、usleep()
+
 ## 信号集
-- sigset_t 信号集类型
+- sigset_t          信号集类型,位图的形式囊括当前支持的信号个数
 - sigemptyset() 	将一个信号集置为空集
-- sigfillset() 	将一个信号集置为全集
-- sigaddset() 	将一个信号加入信号集
-- sigdelset()	 将一个信号移除信号集
+- sigfillset() 	    将一个信号集置为全集
+- sigaddset() 	    将一个信号加入信号集
+- sigdelset()	    将一个信号移除信号集
 - sigismember()
 
 ### 信号屏蔽字/pending集的处理

@@ -13,7 +13,8 @@ static const int SIZE = 30;
 static const int CPS = SIZE;
 static const int BURST = 100;//最大令牌数
 
-static volatile int token = 0;//持有令牌数
+//保证token操作的原子性
+static volatile sig_atomic_t token = 0;//持有令牌数
 
 static void handler(int sig){
     alarm(1);
