@@ -483,7 +483,9 @@ int main(int argc,char** argv)
 - setitimer() 更灵活 **而且误差不累积**，alarm()只能一秒为单位设置时钟
 ![](https://i.loli.net/2021/10/19/NIqAxPJuUwsRzKe.png)
 当it_value的值衰减为0时，it_interval的值赋给it_value，这个赋值是原子的。
-~~~ c
+
+>使用setitimer()替换alarm()
+~~~ cpp
 //信号处理函数
 static void handler(int sig){
     struct itimerval itv;
@@ -547,18 +549,20 @@ static void mod_unload(){
 - sigfillset() 	    将一个信号集置为全集
 - sigaddset() 	    将一个信号加入信号集
 - sigdelset()	    将一个信号移除信号集
-- sigismember()
+- sigismember()     测试一个信号是否在信号集中
 
 ### 信号屏蔽字/pending集的处理
-
 **我们无法控制信号何时到来，但可以选择如何响应它**
-
 - sigprocmask(int how,const sigset_t *set,sigset_t *oldset)
-- how的取值
-	-  SIG_BLOCK make全0
-	-  SIG_UNBLOCK mask全1
-	-  SIG_SETMASK
-~~~ c
+how的取值
+1> SIG_BLOCK    当前信号屏蔽字和set的并集，set中包含希望被阻塞的信号
+2> SIG_UNBLOCK  当前信号屏蔽字和set的补集的交集，set中包含希望被取消阻塞的信号
+3> SIG_SETMASK  设置mask为传入set值
+
+**在sigprocmask返回之前，如果进程存在未决的，非阻塞的信号，则在返回前至少有一个被递送。**
+
+>star.c
+~~~ cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -575,14 +579,14 @@ int main()
 {
     int i;
 
-    sigset_t sigset,old_sigset,sigset_status;
+    sigset_t sigset,old_sigset;
     sigemptyset(&sigset);
     sigaddset(&sigset,SIGINT);
 
     signal(SIGINT,handler);
     
     //保存进入该模块前的状态
-    sigprocmask(SIG_UNBLOCK,&sigset_status,NULL);
+    sigprocmask(SIG_UNBLOCK,&sigset,old_sigset);
     while(1){
          //屏蔽对信号的响应
         sigprocmask(SIG_BLOCK,&sigset,&old_sigset);
@@ -595,16 +599,21 @@ int main()
         sigprocmask(SIG_SETMASK,&old_sigset,NULL);
     }
     //恢复进入该模块前的状态
-    sigprocmask(SIG_SETMASK,&sigset_status,NULL);
+    sigprocmask(SIG_SETMASK,&old_sigset,NULL);
 
     exit(0);
 }
 ~~~
 ctrl+\ 退出
 
+- sigpending():返回当前进程未决的，阻塞的一组信号
+
+- sigsetjmp、siglongjmp
+在信号处理函数当中，不能直接使用setjmp、longjmp进行跳转，在一些环境下会丢失mask的值（信号响应过程：处理完成后返回内核恢复mask），故引入以上两个函数
 ## 扩展
 - sigsuspend() 信号驱动
-~~~ c
+pause()实现的不足：在pause()之前，信号就已经被响应
+~~~ cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -620,7 +629,7 @@ int main()
 {
     int i;
 
-    sigset_t sigset,old_sigset,sigset_status;
+    sigset_t sigset,old_sigset;
     sigemptyset(&sigset);
     sigaddset(&sigset,SIGINT);
 
@@ -631,7 +640,6 @@ int main()
     sigaction(SIGINT,&sa,NULL);
 
     //保存进入该模块前的状态
-    sigprocmask(SIG_UNBLOCK,&sigset_status,NULL);
     sigprocmask(SIG_BLOCK,&sigset,&old_sigset);
     while(1){
         for (i = 0;i < N;i++){
@@ -642,7 +650,7 @@ int main()
         sigsuspend(&old_sigset);
     }
     //恢复进入该模块前的状态
-    sigprocmask(SIG_SETMASK,&sigset_status,NULL);
+    sigprocmask(SIG_SETMASK,&old_sigset,NULL);
 
     exit(0);
 }
