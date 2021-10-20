@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #define N 5
+#define MYRT_SIG __SIGRTMIN+6
 
 void handler(int sig){
     write(1,"S",1);
@@ -16,9 +17,9 @@ int main()
 
     sigset_t sigset,old_sigset,sigset_status;
     sigemptyset(&sigset);
-    sigaddset(&sigset,SIGINT);
+    sigaddset(&sigset,MYRT_SIG);
 
-    signal(SIGINT,handler);
+    signal(MYRT_SIG,handler);
     
     //保存进入该模块前的状态
     sigprocmask(SIG_UNBLOCK,&sigset_status,NULL);
