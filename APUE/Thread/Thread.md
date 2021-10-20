@@ -13,7 +13,8 @@
 ### 线程的创建
 - pthread_create()
 
-~~~ c#include <stdio.h>
+~~~ cpp
+#include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
@@ -50,7 +51,7 @@ int main()
 
 - pthread_exit();
 
-~~~ c
+~~~ cpp
 static void *func(void *p){
     puts("thread is working");
     pthread_exit(NULL);
@@ -76,7 +77,7 @@ int main()
 
 - pthread_join() 先当于进程的 wait()
 
-~~~ c
+~~~ cpp
 static void *func(void *p){
     puts("thread is working");
     pthread_exit(NULL);
@@ -105,7 +106,7 @@ int main()
 
 **类似钩子函数，程序只要正常终止，钩子函数就会被逆序调用，push 与 pop 可以指定操作**
 
-~~~ c
+~~~ cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -162,7 +163,7 @@ int main()
         - 异步cancel
         - **推迟cancel(默认) 推迟到cancel点再响应**
         - **cancel点 ： POSIX定义的cancel点 都是可能引发阻塞的系统调用**
-~~~ c
+~~~ cpp
 //示意
 
 static void cleanup(void *){
