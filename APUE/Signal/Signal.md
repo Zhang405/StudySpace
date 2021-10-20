@@ -613,6 +613,14 @@ ctrl+\ 退出
 ## 扩展
 - sigsuspend() 信号驱动
 pause()实现的不足：在pause()之前，信号就已经被响应
+相当于
+```cpp
+sigprocmask(SIG_SETMASK,&old_sigset,&temp_sigset);
+pause();
+sigprocmask(SIG_SETMASK,&temp_sigset,&NULL);
+```
+
+>信号驱动实现，使用sigaction
 ~~~ cpp
 #include <stdio.h>
 #include <stdlib.h>
@@ -656,7 +664,7 @@ int main()
 }
 ~~~
 
-~~~ c
+~~~ cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -698,7 +706,10 @@ int main()
 ~~~
 
 - sigaction() 用来替换signal() 还可以指定信号的来源以选择是否响应
-~~~ c
+signal()有重入的风险，如下图，在处理SIGINT的时候，被SIGQUIT打断。
+![](https://i.loli.net/2021/10/20/xBOTNQ6Dg8FtMZE.png)
+当然可以借助信号屏蔽字实现，在响应一个信号时，屏蔽其他信号。
+~~~ cpp
 //信号处理函数
 static void handler(int sig,siginfo_t *infop,void *unused){
     struct itimerval itv;
