@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define THRNUM 20
-#define FNAME "/tmp/out"
+#define FNAME "./tesr"
 #define BUFSIZE 1024
 
 //互斥量

@@ -275,7 +275,7 @@ int main()
 ## 线程同步
 #### 互斥量
 
-**锁住的是一段代码而不是一个变量**
+**锁住的是一段代码而不是一个变量**,限制某一段代码能否运行
 - pthread_mutex_t
 - pthread_mutex_init()
 - pthread_mutex_destory()
@@ -335,7 +335,8 @@ int main()
 
 ~~~
 
-~~~ c
+>使用锁链来实现循环打印1234
+~~~ cpp
 //循环打印 abcd
 #define N 4
 #define LEFT 30000000
@@ -374,7 +375,7 @@ int main()
             exit(1);
         }
     }
-
+    //首先让第0个解锁，第一个打印1；
     pthread_mutex_unlock(mutex_arr+0);
     alarm(3) ;   
 
@@ -389,6 +390,8 @@ int main()
 
 ~~~
 
+>使用池类算法计算质数，基本思想如下图：
+![](https://i.loli.net/2021/10/21/ZDJUqNwRbvXeSBC.png)
 ~~~ c
 //池类算法算质数
 #define THRNUM 3
@@ -408,7 +411,7 @@ static void *handler(void *p){
             sched_yield();
             pthread_mutex_lock(&mutex);
         }
-    
+     
         if (num == -1){
             pthread_mutex_unlock(&mutex);
             break;
