@@ -35,22 +35,26 @@ int main()
         fprintf(stderr,"pthread_create err %s\n",strerror(err));
         exit(1);
     }
-    sleep(1);
+    //sleep(1);
     printf("End\n");
     exit(0);
 }
 
 
 ~~~
-**线程的调度取决于调度器的测略**
+**线程的调度取决于调度器的策略**
+没有sleep时，发现未打印func中的，是因为还没来的及调度线程就执行了exit，终止了进程
 
 ### 线程的终止
+- 三种方式
 1. **线程从启动例程返回，返回值就是线程的退出码**
 2. **线程可以被同一进程的其他线程取消**
 3. **线程调用`pthread_exit()`函数**
 
 - pthread_exit();
+正常结束一个线程。实现线程栈的清理
 
+>示例，后续完善
 ~~~ cpp
 static void *func(void *p){
     puts("thread is working");
@@ -75,8 +79,10 @@ int main()
 
 ~~~
 
-- pthread_join() 先当于进程的 wait()
+- pthread_join() 
+相当于进程的 wait()，对线程进行收尸，指定收谁。
 
+>完善此程序，使用pthread_join()等待创建的线程结束
 ~~~ cpp
 static void *func(void *p){
     puts("thread is working");
@@ -103,9 +109,14 @@ int main()
 ### 线程/栈的清理
 - pthread_cleanup_push()
 - pthread_cleanup_pop()
+**类似钩子函数，程序只要正常终止，钩子函数就会被逆序调用，而push 与 pop 可以指定操作**
+1>当一个线程被取消时，所有堆叠的清理处理程序都会以与它们被推送到堆栈的顺序相反的顺序弹出和执行。
+2>当一个线程通过调用 pthread_exit(3) 终止时，所有的清理处理程序都按照上一点中的描述执行。（清理处理程序是如果线程通过从线程启动函数执行return而终止，则不会调用。）
+3>当线程使用非零执行参数调用 pthread_cleanup_pop() 时，将弹出并执行最顶层的清理处理程序。
 
-**类似钩子函数，程序只要正常终止，钩子函数就会被逆序调用，push 与 pop 可以指定操作**
-
+**`pthread_cleanup_push,pthread_cleanup_pop`要成对出现，他们其实是宏，展开只有一半大括号，另一半大括号pop中**
+![](https://i.loli.net/2021/10/21/b2SVwWFP9mqKoEj.png)
+![](https://i.loli.net/2021/10/21/3C5lmrfs8I4MpaN.png)
 ~~~ cpp
 #include <stdio.h>
 #include <stdlib.h>
@@ -155,14 +166,17 @@ int main()
 ~~~
 
 ### 线程的取消选项
-- 多线程任务 有时需要取消部分任务(线程)
+- 多线程任务 有时需要取消部分任务(线程),取消后再收尸
 - pthread_cancel()
 - 取消有2种状态 
     - 不允许
     - 允许
         - 异步cancel
         - **推迟cancel(默认) 推迟到cancel点再响应**
-        - **cancel点 ： POSIX定义的cancel点 都是可能引发阻塞的系统调用**
+        - **cancel点 ： POSIX定义的cancel点:都是可能引发阻塞的系统调用**
+- pthread_setcancelstate():设置是否允许取消
+- pthread_setcanceltype():设置取消方式
+- pthread_testcancel():什么都不做，就是一个取消点
 ~~~ cpp
 //示意
 
@@ -178,11 +192,10 @@ if (fd1 < 0){
 }
 //在这收到一个取消请求 但因为下面的代码没有阻塞的系统调用 所以不会响应
 pthread_cleanup_push(cleanup,&fd);
-pthread)cleanup_pop(1);
+pthread_cleanup_pop(1);
 
 
 //cancel点 下面的open是阻塞的系统调用 对上面的取消请求做出响应
-
 fd2 = open();
 if (fd2 < 0){
     perror();
@@ -192,6 +205,9 @@ if (fd2 < 0){
 
 - pthread_setcancelstate() 设置是否允许取消
 - pthread_testcancel() 什么都不做 本身就是一个取消点
+
+线程分离：pthread_detach(pthread_t thread);
+已经detach的线程不能被jion回来
 
 - 进程异常终止的条件之一
     - **最后一个线程对其取消请求作出响应**

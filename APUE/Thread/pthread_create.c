@@ -20,6 +20,7 @@ int main()
         exit(1);
     }
     
+    //sleep(1);
     pthread_join(ptid,NULL);
     printf("End\n");
     exit(0);
