@@ -392,7 +392,7 @@ int main()
 
 >使用池类算法计算质数，基本思想如下图：
 ![](https://i.loli.net/2021/10/21/ZDJUqNwRbvXeSBC.png)
-~~~ c
+~~~ cpp
 //池类算法算质数
 #define THRNUM 3
 #define LEFT 30000000
@@ -486,7 +486,7 @@ int main()
 
 ~~~
 **头文件 与 测试主函数 请见信号篇的 令牌桶**
-~~~ c
+~~~ cpp
 //令牌桶
 struct mytbf_st{
     int csp;
@@ -603,6 +603,7 @@ int mytbf_fetchtoken(mytbf_t *ptr,int size){
     //有token继续
     pthread_mutex_lock(&tbf->mut);
     while (tbf->token <= 0){
+        //此处存在盲等，直到有token在手里(轮询)
         pthread_mutex_unlock(&tbf->mut);
         sched_yield();
         pthread_mutex_lock(&tbf->mut);
@@ -649,13 +650,14 @@ int mytbf_destroy(mytbf_t *ptr){
 - pthread_cond_t
 - pthread_cond_init()
 - pthread_cond_destory()
+- pthread_cond_timedwait()
 - pthread_cond_wait() **等通知 + 抢锁**
 - pthread_cond_broadcast() 广播给所有线程
 - pthread_cond_signal() 通知任意一个线程
 
 条件变量可以解决 互斥量进行盲等的问题 即实现了通知法，**通知互斥量什么时候上锁**
 
-~~~ c
+~~~ cpp
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;;
 static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;;
 static int num = 0;
