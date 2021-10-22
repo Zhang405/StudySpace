@@ -136,7 +136,6 @@ static void *func(void *p){
     
     //pthread_exit(NULL);
     //下面的内容执行不到但是不会报错 会按照全为 1 处理
-
     pthread_cleanup_pop(1);//语法结构一定要对等
     pthread_cleanup_pop(0);
     pthread_cleanup_pop(1);
