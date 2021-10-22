@@ -1,41 +1,39 @@
-#include <sched.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <wait.h>
-#include <string.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<pthread.h>
+#include<string.h>
 
-#define THRNUM 50
-#define LEFT 30000001
+#define THRNUM 20
+#define LEFT 30000000
 #define RIGHT 30000200
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;;
-static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;;
 static int num = 0;
+static pthread_mutex_t mut_num = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond_num = PTHREAD_COND_INITIALIZER;
 
-static void *handler(void *p){
-    int task,mark,count = 0;
+static void*handle(void* p)
+{
 
-    while(1){
-        pthread_mutex_lock(&mutex);
-        while(num == 0){
-            pthread_cond_wait(&cond,&mutex);
+    while(1)
+    {
+        pthread_mutex_lock(&mut_num);
+        while (num == 0)
+        {
+            pthread_cond_wait(&cond_num,&mut_num);
         }
-    
-        if (num == -1){
-            pthread_mutex_unlock(&mutex);
+        
+        if(num == -1)
+        {
+            pthread_mutex_unlock(&mut_num);
             break;
         }
 
+        int task = num;
+        num = 0;
+        pthread_cond_broadcast(&cond_num);
+        pthread_mutex_unlock(&mut_num);
 
-        task = num;
-        num = 0;//成功领取任务
-        pthread_cond_broadcast(&cond);
-        pthread_mutex_unlock(&mutex);
-
-        mark = 1;
+        int mark = 1;
         for (int j = 2;j <= task/2;j++){
             if (task%j == 0){
                 mark = 0;
@@ -43,62 +41,56 @@ static void *handler(void *p){
             }
         }
         if (mark) {
-            printf("[%d] %d is a priamer\n",*(int *)p,task);
-        }
-        count++;
-        if (count == 5){
-            break;
+            printf("[%2d] %d is a primer\n",*(int *)p,task);
         }
     }
-
+    free(p);
     pthread_exit(NULL);
 }
 
-//池类算法
 int main()
 {
-    pthread_t Ptid[THRNUM];
-
-    for (int n = 0;n < THRNUM;n++){
+    pthread_t ptid[THRNUM];
+    for(int i = 0 ; i!= THRNUM;i++)
+    {
         int *num = malloc(sizeof(int));
-        *num = n;
-        int err = pthread_create(Ptid+n,NULL,handler,num);
-        if (err){
+        *num = i;
+        int err = pthread_create(ptid+i,NULL,handle,num);
+        if(err)
+        {
             fprintf(stderr,"%s\n",strerror(err));
             exit(1);
         }
     }
 
-    for (int i = LEFT;i <= RIGHT;i++){
-        pthread_mutex_lock(&mutex);
-        
-        //任务没有被领取
-        while(num != 0){
-            pthread_cond_wait(&cond,&mutex);
+    for(int i = LEFT;i != RIGHT; i++)
+    {
+        pthread_mutex_lock(&mut_num);
+        while(num != 0)
+        {
+            pthread_cond_wait(&cond_num,&mut_num);
         }
-        //任务已经成功下发
         num = i;
-        pthread_cond_signal(&cond);
-        pthread_mutex_unlock(&mutex);
-    }
-    
-    pthread_mutex_lock(&mutex);
-    //任务没有被领取
-    while(num != 0){
-        pthread_cond_wait(&cond,&mutex);
-    }
-    //任务已经成功下发
-    num = -1;
-    pthread_cond_broadcast(&cond);
-    pthread_mutex_unlock(&mutex);
-
-    int n;
-    for (n =0 ;n < THRNUM;n++){
-        pthread_join(Ptid[n],NULL);
+        pthread_cond_signal(&cond_num);
+        pthread_mutex_unlock(&mut_num);
     }
 
-    pthread_mutex_destroy(&mutex);
-    pthread_cond_destroy(&cond);
+    pthread_mutex_lock(&mut_num);
+    while(num != 0)
+    {
+        pthread_cond_wait(&cond_num,&mut_num);
+    }
+    num =-1;
+    pthread_cond_broadcast(&cond_num);
+    pthread_mutex_unlock(&mut_num);
+
+    for(int  i = 0; i!= THRNUM;i++)
+    {
+        pthread_join(ptid[i],NULL);
+    }
+
+    pthread_mutex_destroy(&mut_num);
+    pthread_cond_destroy(&cond_num);
 
     exit(0);
 }

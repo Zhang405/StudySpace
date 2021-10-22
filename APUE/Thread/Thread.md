@@ -754,7 +754,7 @@ int main()
 
 **通过互斥量与条件变量的配合我们可以实现信号量 信号量像是一个激活函数 当这个变量超过阈值时 将会触发条件变量给互斥量上锁**
 
-~~~ c
+~~~ cpp
 #include "mysem.h"
 
 struct mysem_st{
@@ -816,7 +816,7 @@ int mysem_destory(mysem_t *ptr){
 
 ~~~
 
-~~~ c
+~~~ cpp
 
 #define THRNUM 20
 #define N 5
@@ -922,7 +922,7 @@ int main()
 
 #### 读写锁
 
-~~~ c
+~~~ cpp
 
 ~~~
 
@@ -958,7 +958,7 @@ int main()
 
 ## openmp
 
-~~~ c
+~~~ cpp
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
