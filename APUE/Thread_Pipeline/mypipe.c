@@ -74,6 +74,7 @@ int mypipe_unregister(mypipe_t *ptr,int opmap){
     return 0;
 }
 
+//按字节读到data中，更新pipe数据，直至pipe中数据为0
 static int mypipe_readbyte_unlocked(struct mypipe_st *pipe,char *data){
     //管道无数据
     if (pipe->datasize <= 0){
@@ -83,7 +84,7 @@ static int mypipe_readbyte_unlocked(struct mypipe_st *pipe,char *data){
     //管道有数据 读取一个现在管道的读端数据,用data保存
     *data = pipe->data[pipe->head];
 
-    pipe->head = (pipe->head++)%PIPESIZE;
+    pipe->head = (pipe->head++)%PIPESIZE;//循环队列，下标为1023的下一个为0；
     pipe->datasize--;
     return 0;
 }
@@ -123,6 +124,7 @@ int mypipe_read(mypipe_t *ptr,void *buf,size_t size){
             break;
         }
     }
+    pthread_cond_broadcast(&pipe->cond);
     pthread_mutex_unlock(&pipe->mutex);
 
     return 0;
@@ -149,6 +151,7 @@ int mypipe_write(mypipe_t *ptr,const void *buf,size_t size){
             break;
         }
     }
+    pthread_cond_broadcast(&pipe->cond);
     pthread_mutex_unlock(&pipe->mutex);
 
     return 0;
