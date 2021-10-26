@@ -941,13 +941,14 @@ int main()
     - pthread_mutexattr_setshared()
 - pthread_mutexattr_gettype()
 - pthread_mutexattr_settype()
+![](https://i.loli.net/2021/10/25/j753MkGLTyhAIBg.png)
 
 #### 条件变量属性
 - pthread_condattr_init()
 - pthread_condattr_destory()
 
 ### 重入(reentry)
-#### 多线程中的IO
+#### 多线程中的IO,支持多线程并发，对缓冲区加锁解锁
 - getchar_unlocked
 
 ### 线程与信号
