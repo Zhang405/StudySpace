@@ -98,7 +98,7 @@ mpg123 musicpipe
 
 ## XSI(SysV)
 - `ipcs`命令
-- ftok() **使得通信双方拿到同一个机制**
+- ftok() **使得通信双方拿到同一个key值，找到某个共享机制**
 - 函数的命名方式类似
     - xxxget 获取
     - xxxop 操作
