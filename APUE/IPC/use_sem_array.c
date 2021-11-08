@@ -85,6 +85,7 @@ int main()
         exit(1);
     }
     //初始化
+    //只有一个信号量，初始化为一，此时相当于互斥量
     if (semctl(semid,0,SETVAL,1)){//相当于互斥量
         perror("semctl()");
         exit(1);

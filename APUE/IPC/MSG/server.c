@@ -31,6 +31,7 @@ int main(){
             exit(1);
         }
 
+        fprintf(stdout,"Type : %ld",rbuf.mtype);
         fprintf(stdout,"name : %s ",rbuf.name);
         fprintf(stdout,"chinese : %d ",rbuf.chinese);
         fprintf(stdout,"math : %d\n",rbuf.math);
