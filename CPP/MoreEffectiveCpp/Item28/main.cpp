@@ -1,8 +1,13 @@
+/*
+ * @Description: 
+ * @Author: XZMJX
+ * @Date: 2021-11-30 19:22:55
+ */
 #include<iostream>
 #include"MySmartPtr.h"
 
 using namespace XZMJX;
-
+  
 int main()
 {
     MySmartPtr<int> sp(new int(10));

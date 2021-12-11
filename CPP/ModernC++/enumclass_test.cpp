@@ -8,6 +8,8 @@ enum class Enum_Type:int
     EType_c,
     EType_d
 };
+
+//强类型的枚举
 template<typename T>
 std::ostream& operator<<(typename std::enable_if<std::is_enum<T>::value,std::ostream>::type& stream,const T& e)
 {

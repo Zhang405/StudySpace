@@ -41,6 +41,7 @@ void Stack<T, MAXSIZE>::push(T const& elem)
     ++numElems;
 }
 
+//MAXSIZE作为模板参数
 template<typename T, int MAXSIZE>
 void Stack<T, MAXSIZE>::pop()
 {
