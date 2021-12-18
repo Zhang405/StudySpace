@@ -23,6 +23,7 @@ xzmjx::Log::~Log()
 void* xzmjx::Log::AsyncWriteLogThread(void* ignore)
 {
     xzmjx::Log::GetInstance()->_async_write_log();
+    return NULL;
 }
 
 void xzmjx::Log::Flush(void)
@@ -32,7 +33,7 @@ void xzmjx::Log::Flush(void)
     _M_mutex.UnLock();
 }
 
-bool xzmjx::Log::Init(const char* file_name,int close_log,int log_buf_size = 8192,int split_lines = 5000000,int max_queue_size = 0)
+bool xzmjx::Log::Init(const char* file_name,int close_log,int log_buf_size,int split_lines,int max_queue_size)
 {
     if(_M_max_log_queue_count>=1)
     {
@@ -164,5 +165,6 @@ void* xzmjx::Log::_async_write_log()
         fflush(_M_fp);
         _M_mutex.UnLock();
     }
+    return NULL;
 }
 

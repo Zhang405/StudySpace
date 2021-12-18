@@ -7,16 +7,17 @@ namespace xzmjx
         MYSQL* res = NULL;
         _M_SemToReserveConn.Wait();
         _M_Locker.Lock();
-        con = _M_ConnList.pop_front();
+        res = _M_ConnList.front();
+        _M_ConnList.pop_front();
         ++_M_ConnNumOccupy;
         --_M_freeConnNum;
         _M_Locker.UnLock();
-        return con;
+        return res;
     }
     
     bool SQLConnPool::ReleseConnection(MYSQL* con) 
     {
-        if(NULL == conn)
+        if(NULL == con)
             return false;
         _M_Locker.Lock();
         _M_ConnList.push_back(con);
@@ -62,7 +63,7 @@ namespace xzmjx
         _M_DatabaseName = database;
         _M_port = port;
         _M_maxConnNum = maxconn;
-        _M_closeLog = closeLog;
+        _M_close_log = closeLog;
 
         for(int i = 0; i < _M_maxConnNum;++i)
         {
@@ -89,7 +90,7 @@ namespace xzmjx
     SQLConnPool::SQLConnPool() :_M_maxConnNum(100),
     _M_ConnNumOccupy(0),
     _M_freeConnNum(100),
-    _M_closeLog(0)
+    _M_close_log(0)
     {
         
     }
