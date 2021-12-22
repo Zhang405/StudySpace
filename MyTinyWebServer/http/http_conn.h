@@ -7,6 +7,8 @@
 #include<map>
 #include<sys/stat.h>
 #include<mysql/mysql.h>
+#include"../CGImysql/sql_connection_pool.h"
+
 
 
 namespace xzmjx
@@ -53,8 +55,9 @@ namespace xzmjx
             NO_REQUEST,
             GET_REQUEST,
             BAD_REQUEST,
-            NO_REQUEST,
+            NO_RESOURCE,
             FORBINDEN_REQUEST,
+            FILE_REQUEST,
             INTERNAL_ERROR,
             CLOSED_CONNECTION
         };
@@ -63,7 +66,7 @@ namespace xzmjx
         ~HttpConn();
     public:
         void Init(int sockfd,const sockaddr_in &addr,char*,int,int,std::string user,std::string passwd,std::string sqlname);
-        void CloseConnection();
+        void CloseConnection(bool realClose = true);
         void Process();
         bool Write();
         sockaddr_in* GetAddr()
@@ -71,28 +74,28 @@ namespace xzmjx
             return &_M_address;
         }
 
-        //void IniMySQLResult(connection_pool *connPool);
+        void IniMySQLResult(SQLConnPool *connPool);
         int timer_flag;
         int improv;
     private:
-        void init();
-        HTTP_CODE process_read();
-        bool process_write(HTTP_CODE ret);
-        HTTP_CODE parse_request_line(char *text);
-        HTTP_CODE parse_headers(char *text);
-        HTTP_CODE parse_content(char *text);
-        HTTP_CODE do_request();
-        char *get_line() { return _M_read_buf + _M_start_line; };
-        LINE_STATUS parse_line();
-        void unmap();
-        bool add_response(const char *format, ...);
-        bool add_content(const char *content);
-        bool add_status_line(int status, const char *title);
-        bool add_headers(int content_length);
-        bool add_content_type();
-        bool add_content_length(int content_length);
-        bool add_linger();
-        bool add_blank_line();
+        void Init();
+        HTTP_CODE ProcessRead();
+        bool ProcessWrite(HTTP_CODE ret);
+        HTTP_CODE ParseRequestLine(char *text);
+        HTTP_CODE ParseHeaders(char *text);
+        HTTP_CODE ParseContent(char *text);
+        HTTP_CODE DoRequest();
+        char *GetLine() { return _M_read_buf + _M_start_line; };
+        LINE_STATUS ParseLine();
+        void Unmap();
+        bool AddResponse(const char *format, ...);
+        bool AddContent(const char *content);
+        bool AddStatusLine(int status, const char *title);
+        bool AddHeaders(int content_length);
+        bool AddContentType();
+        bool AddContentLength(int content_length);
+        bool AddLinger();
+        bool AddBlankLine();
     public:
         static int m_epollfd;
         static int m_user_count;
@@ -114,7 +117,7 @@ namespace xzmjx
         char* _M_version;
         char* _M_host;
         int _M_content_len;
-        bool _M_linger;
+        bool _M_longer;
         char* _M_file_address;
         struct stat _M_file_stat;
         struct iovec _M_ivp[2];
