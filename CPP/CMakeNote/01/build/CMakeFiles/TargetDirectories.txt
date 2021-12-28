@@ -1,0 +1,4 @@
+/home/xzmjx/StudySpace/CPP/CMakeNote/01/build/CMakeFiles/rebuild_cache.dir
+/home/xzmjx/StudySpace/CPP/CMakeNote/01/build/CMakeFiles/edit_cache.dir
+/home/xzmjx/StudySpace/CPP/CMakeNote/01/build/CMakeFiles/hellolib.dir
+/home/xzmjx/StudySpace/CPP/CMakeNote/01/build/CMakeFiles/hello.dir

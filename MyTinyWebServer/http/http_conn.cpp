@@ -617,6 +617,7 @@ namespace xzmjx
         HTTP_CODE read_ret = ProcessRead();
         if(HTTP_CODE::NO_REQUEST == read_ret)
         {
+            //没有接受到完整的请求，继续关注sockfd上的读事件
             modfd(m_epollfd,_M_sockfd,EPOLLIN,_M_TRIGMode);
             return;//继续等待接受客户端数据
         }
@@ -625,6 +626,7 @@ namespace xzmjx
         {
             CloseConnection();
         }
+        //处理完成，可以开始写数据，关注何时可以开始，即可写事件
         modfd(m_epollfd,_M_sockfd,EPOLLOUT,_M_TRIGMode);
     }
     
@@ -633,7 +635,7 @@ namespace xzmjx
         int temp = 0;
         if(bytes_to_send == 0)
         {
-            //以发送完，触发一个可读事件，处理下一次的请求
+            //没有数据可发，关注scokfd上的读事件
             modfd(m_epollfd,_M_sockfd,EPOLLIN,_M_TRIGMode);
             Init();
             return true;
@@ -645,7 +647,7 @@ namespace xzmjx
             {
                 if(errno == EAGAIN)
                 {
-                    //发送缓冲区已被写满，触发一个可写事件，表示下次再来写
+                    //发送缓冲区已被写满，关注写事件，下次再来写
                     modfd(m_epollfd,_M_sockfd,EPOLLOUT,_M_TRIGMode);
                     return true;
                 }
