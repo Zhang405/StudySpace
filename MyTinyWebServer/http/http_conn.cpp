@@ -496,7 +496,7 @@ namespace xzmjx
     {
         /*******************************************
          __|__|__|__|__|__|__|__|__|__|__|__|__|__|
-                  ^write_idx          ^read_idx
+                 ^write_idx          ^read_idx
          *******************************************/
         char temp;
         for(;_M_check_idx<_M_read_idx;++_M_check_idx)

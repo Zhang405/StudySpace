@@ -1,0 +1,44 @@
+Vtable for A
+A::_ZTV1A: 3 entries
+0     (int (*)(...))0
+8     (int (*)(...))(& _ZTI1A)
+16    (int (*)(...))A::f0
+
+Class A
+   size=16 align=8
+   base size=12 base align=8
+A (0x0x7f7361967960) 0
+    vptr=((& A::_ZTV1A) + 16)
+
+Vtable for B
+B::_ZTV1B: 3 entries
+0     (int (*)(...))0
+8     (int (*)(...))(& _ZTI1B)
+16    (int (*)(...))B::f1
+
+Class B
+   size=16 align=8
+   base size=12 base align=8
+B (0x0x7f7361967a20) 0
+    vptr=((& B::_ZTV1B) + 16)
+
+Vtable for C
+C::_ZTV1C: 7 entries
+0     (int (*)(...))0
+8     (int (*)(...))(& _ZTI1C)
+16    (int (*)(...))C::f0
+24    (int (*)(...))C::f1
+32    (int (*)(...))-16
+40    (int (*)(...))(& _ZTI1C)
+48    (int (*)(...))C::_ZThn16_N1C2f1Ev
+
+Class C
+   size=32 align=8
+   base size=32 base align=8
+C (0x0x7f736197e000) 0
+    vptr=((& C::_ZTV1C) + 16)
+  A (0x0x7f7361967ae0) 0
+      primary-for C (0x0x7f736197e000)
+  B (0x0x7f7361967b40) 16
+      vptr=((& C::_ZTV1C) + 48)
+

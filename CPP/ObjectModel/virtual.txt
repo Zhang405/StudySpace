@@ -1,0 +1,132 @@
+Vtable for A
+A::vtable for A: 4 entries
+0     (int (*)(...))0
+8     (int (*)(...))(& typeinfo for A)
+16    (int (*)(...))A::f0
+24    (int (*)(...))A::bar
+
+Class A
+   size=16 align=8
+   base size=12 base align=8
+A (0x0x7f136e2a1960) 0
+    vptr=((& A::vtable for A) + 16)
+
+Vtable for B
+B::vtable for B: 10 entries
+0     16
+8     (int (*)(...))0
+16    (int (*)(...))(& typeinfo for B)
+24    (int (*)(...))B::f0
+32    0
+40    18446744073709551600
+48    (int (*)(...))-16
+56    (int (*)(...))(& typeinfo for B)
+64    (int (*)(...))B::virtual thunk to B::f0()
+72    (int (*)(...))A::bar
+
+VTT for B
+B::VTT for B: 2 entries
+0     ((& B::vtable for B) + 24)
+8     ((& B::vtable for B) + 64)
+
+Class B
+   size=32 align=8
+   base size=12 base align=8
+B (0x0x7f136e14a208) 0
+    vptridx=0 vptr=((& B::vtable for B) + 24)
+  A (0x0x7f136e2a1a80) 16 virtual
+      vptridx=8 vbaseoffset=-24 vptr=((& B::vtable for B) + 64)
+
+Vtable for C
+C::vtable for C: 10 entries
+0     16
+8     (int (*)(...))0
+16    (int (*)(...))(& typeinfo for C)
+24    (int (*)(...))C::f0
+32    0
+40    18446744073709551600
+48    (int (*)(...))-16
+56    (int (*)(...))(& typeinfo for C)
+64    (int (*)(...))C::virtual thunk to C::f0()
+72    (int (*)(...))A::bar
+
+VTT for C
+C::VTT for C: 2 entries
+0     ((& C::vtable for C) + 24)
+8     ((& C::vtable for C) + 64)
+
+Class C
+   size=32 align=8
+   base size=12 base align=8
+C (0x0x7f136e14a340) 0
+    vptridx=0 vptr=((& C::vtable for C) + 24)
+  A (0x0x7f136e2a1b40) 16 virtual
+      vptridx=8 vbaseoffset=-24 vptr=((& C::vtable for C) + 64)
+
+Vtable for D
+D::vtable for D: 14 entries
+0     32
+8     (int (*)(...))0
+16    (int (*)(...))(& typeinfo for D)
+24    (int (*)(...))D::f0
+32    16
+40    (int (*)(...))-16
+48    (int (*)(...))(& typeinfo for D)
+56    (int (*)(...))D::non-virtual thunk to D::f0()
+64    0
+72    18446744073709551584
+80    (int (*)(...))-32
+88    (int (*)(...))(& typeinfo for D)
+96    (int (*)(...))D::virtual thunk to D::f0()
+104   (int (*)(...))A::bar
+
+Construction vtable for B (0x0x7f136e14a410 instance) in D
+D::construction vtable for B-in-D: 10 entries
+0     32
+8     (int (*)(...))0
+16    (int (*)(...))(& typeinfo for B)
+24    (int (*)(...))B::f0
+32    0
+40    18446744073709551584
+48    (int (*)(...))-32
+56    (int (*)(...))(& typeinfo for B)
+64    (int (*)(...))B::virtual thunk to B::f0()
+72    (int (*)(...))A::bar
+
+Construction vtable for C (0x0x7f136e14a478 instance) in D
+D::construction vtable for C-in-D: 10 entries
+0     16
+8     (int (*)(...))0
+16    (int (*)(...))(& typeinfo for C)
+24    (int (*)(...))C::f0
+32    0
+40    18446744073709551600
+48    (int (*)(...))-16
+56    (int (*)(...))(& typeinfo for C)
+64    (int (*)(...))C::virtual thunk to C::f0()
+72    (int (*)(...))A::bar
+
+VTT for D
+D::VTT for D: 7 entries
+0     ((& D::vtable for D) + 24)
+8     ((& D::construction vtable for B-in-D) + 24)
+16    ((& D::construction vtable for B-in-D) + 64)
+24    ((& D::construction vtable for C-in-D) + 24)
+32    ((& D::construction vtable for C-in-D) + 64)
+40    ((& D::vtable for D) + 96)
+48    ((& D::vtable for D) + 56)
+
+Class D
+   size=48 align=8
+   base size=32 base align=8
+D (0x0x7f136e2b8000) 0
+    vptridx=0 vptr=((& D::vtable for D) + 24)
+  B (0x0x7f136e14a410) 0
+      primary-for D (0x0x7f136e2b8000)
+      subvttidx=8
+    A (0x0x7f136e2a1c00) 32 virtual
+        vptridx=40 vbaseoffset=-24 vptr=((& D::vtable for D) + 96)
+  C (0x0x7f136e14a478) 16
+      subvttidx=24 vptridx=48 vptr=((& D::vtable for D) + 56)
+    A (0x0x7f136e2a1c00) alternative-path
+

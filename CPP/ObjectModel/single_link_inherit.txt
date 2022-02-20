@@ -1,0 +1,45 @@
+Vtable for A
+A::vtable for A: 3 entries
+0     (int (*)(...))0
+8     (int (*)(...))(& typeinfo for A)
+16    (int (*)(...))A::f0
+
+Class A
+   size=16 align=8
+   base size=12 base align=8
+A (0x0x7ff5771b0960) 0
+    vptr=((& A::vtable for A) + 16)
+
+Vtable for B
+B::vtable for B: 4 entries
+0     (int (*)(...))0
+8     (int (*)(...))(& typeinfo for B)
+16    (int (*)(...))A::f0
+24    (int (*)(...))B::f1
+
+Class B
+   size=16 align=8
+   base size=16 base align=8
+B (0x0x7ff5770591a0) 0
+    vptr=((& B::vtable for B) + 16)
+  A (0x0x7ff5771b0a20) 0
+      primary-for B (0x0x7ff5770591a0)
+
+Vtable for C
+C::vtable for C: 5 entries
+0     (int (*)(...))0
+8     (int (*)(...))(& typeinfo for C)
+16    (int (*)(...))C::f0
+24    (int (*)(...))B::f1
+32    (int (*)(...))C::f2
+
+Class C
+   size=24 align=8
+   base size=20 base align=8
+C (0x0x7ff577059208) 0
+    vptr=((& C::vtable for C) + 16)
+  B (0x0x7ff577059270) 0
+      primary-for C (0x0x7ff577059208)
+    A (0x0x7ff5771b0ae0) 0
+        primary-for B (0x0x7ff577059270)
+

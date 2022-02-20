@@ -24,6 +24,13 @@ void match_test(int i,const Types&... args)
 	cout<<"This is The Specialized version"<<endl;
 }
 
+template <typename T, typename... Types>
+void match_test(const T& a,const Types&... args)
+{
+	//相对于泛化版本而言较为特化
+	cout<<"This is The Specialized version1"<<endl;
+}
+
 
 
 int main()

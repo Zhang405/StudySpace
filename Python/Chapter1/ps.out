@@ -1,0 +1,4 @@
+F S UID          PID    PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+0 S xzmjx      74508   74507  0  80   0 - 16948 -      22:10 pts/0    00:00:00 -zsh
+0 T xzmjx      74762   74508  0  80   0 -  8059 -      22:13 pts/0    00:00:00 /usr/bin/python3 ./local_time.py
+4 R xzmjx      74879   74508  0  80   0 - 14684 -      22:14 pts/0    00:00:00 ps -lf
