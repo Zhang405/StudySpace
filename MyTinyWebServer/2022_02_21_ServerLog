@@ -1,1 +1,108 @@
 2022-02-21 15:45:26.281357 [Error]:MySQL ERROR
+2022-02-21 16:24:52.504607 [Info]:timer tick
+2022-02-21 16:24:57.504657 [Info]:timer tick
+2022-02-21 16:25:02.504819 [Info]:timer tick
+2022-02-21 16:25:07.504871 [Info]:timer tick
+2022-02-21 16:25:12.504921 [Info]:timer tick
+2022-02-21 16:25:17.504978 [Info]:timer tick
+2022-02-21 16:25:22.505026 [Info]:timer tick
+2022-02-21 16:25:27.505078 [Info]:timer tick
+2022-02-21 16:25:32.505139 [Info]:timer tick
+2022-02-21 16:25:37.515560 [Info]:timer tick
+2022-02-21 16:25:42.515617 [Info]:timer tick
+2022-02-21 16:25:47.519956 [Info]:timer tick
+2022-02-21 16:25:52.520010 [Info]:timer tick
+2022-02-21 16:25:57.520090 [Info]:timer tick
+2022-02-21 16:26:02.520152 [Info]:timer tick
+2022-02-21 16:26:07.520212 [Info]:timer tick
+2022-02-21 16:26:12.520278 [Info]:timer tick
+2022-02-21 16:26:17.520368 [Info]:timer tick
+2022-02-21 16:26:22.520425 [Info]:timer tick
+2022-02-21 16:26:27.520517 [Info]:timer tick
+2022-02-21 16:26:32.520575 [Info]:timer tick
+2022-02-21 16:26:37.520644 [Info]:timer tick
+2022-02-21 16:26:42.520711 [Info]:timer tick
+2022-02-21 16:26:47.520768 [Info]:timer tick
+2022-02-21 16:26:52.520832 [Info]:timer tick
+2022-02-21 16:26:57.520889 [Info]:timer tick
+2022-02-21 16:27:02.520943 [Info]:timer tick
+2022-02-21 16:27:07.520999 [Info]:timer tick
+2022-02-21 16:27:12.521066 [Info]:timer tick
+2022-02-21 16:27:17.521119 [Info]:timer tick
+2022-02-21 16:27:22.521171 [Info]:timer tick
+2022-02-21 16:27:27.521219 [Info]:timer tick
+2022-02-21 16:27:32.521282 [Info]:timer tick
+2022-02-21 16:27:37.521348 [Info]:timer tick
+2022-02-21 16:27:42.521400 [Info]:timer tick
+2022-02-21 16:27:47.521460 [Info]:timer tick
+2022-02-21 16:27:52.521534 [Info]:timer tick
+2022-02-21 16:27:57.521589 [Info]:timer tick
+2022-02-21 16:28:02.521646 [Info]:timer tick
+2022-02-21 16:28:07.521713 [Info]:timer tick
+2022-02-21 16:28:12.521775 [Info]:timer tick
+2022-02-21 16:28:17.521832 [Info]:timer tick
+2022-02-21 16:28:22.521891 [Info]:timer tick
+2022-02-21 16:28:27.521946 [Info]:timer tick
+2022-02-21 16:28:32.522002 [Info]:timer tick
+2022-02-21 16:28:37.522058 [Info]:timer tick
+2022-02-21 16:28:42.522121 [Info]:timer tick
+2022-02-21 16:28:43.294563 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:28:43.294646 [Info]:adjust timer once
+2022-02-21 16:28:47.522284 [Info]:timer tick
+2022-02-21 16:28:47.627550 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:28:47.627616 [Info]:adjust timer once
+2022-02-21 16:28:52.522387 [Info]:timer tick
+2022-02-21 16:28:52.617051 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:28:52.617123 [Info]:adjust timer once
+2022-02-21 16:28:57.522547 [Info]:timer tick
+2022-02-21 16:28:57.618931 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:28:57.619009 [Info]:adjust timer once
+2022-02-21 16:29:02.522697 [Info]:timer tick
+2022-02-21 16:29:04.152622 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:04.152707 [Info]:adjust timer once
+2022-02-21 16:29:07.522804 [Info]:timer tick
+2022-02-21 16:29:07.607857 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:07.607930 [Info]:adjust timer once
+2022-02-21 16:29:12.522903 [Info]:timer tick
+2022-02-21 16:29:12.613175 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:12.613250 [Info]:adjust timer once
+2022-02-21 16:29:17.523013 [Info]:timer tick
+2022-02-21 16:29:18.640261 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:18.640343 [Info]:adjust timer once
+2022-02-21 16:29:22.523133 [Info]:timer tick
+2022-02-21 16:29:22.620522 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:22.620609 [Info]:adjust timer once
+2022-02-21 16:29:27.523241 [Info]:timer tick
+2022-02-21 16:29:27.611276 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:27.611353 [Info]:adjust timer once
+2022-02-21 16:29:32.523360 [Info]:timer tick
+2022-02-21 16:29:37.523420 [Info]:timer tick
+2022-02-21 16:29:37.640190 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:37.640271 [Info]:adjust timer once
+2022-02-21 16:29:38.467624 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:38.467719 [Info]:adjust timer once
+2022-02-21 16:29:42.523546 [Info]:timer tick
+2022-02-21 16:29:42.625613 [Info]:deal with the client(43.227.139.188)
+2022-02-21 16:29:42.625684 [Info]:adjust timer once
+2022-02-21 16:29:47.523653 [Info]:timer tick
+2022-02-21 16:29:52.523707 [Info]:timer tick
+2022-02-21 16:29:57.523766 [Info]:timer tick
+2022-02-21 16:30:02.523821 [Info]:timer tick
+2022-02-21 16:30:07.523878 [Info]:timer tick
+2022-02-21 16:30:12.523933 [Info]:timer tick
+2022-02-21 16:30:17.526555 [Info]:timer tick
+2022-02-21 16:30:22.526620 [Info]:timer tick
+2022-02-21 16:30:27.526701 [Info]:timer tick
+2022-02-21 16:30:32.527226 [Info]:timer tick
+2022-02-21 16:30:37.527299 [Info]:timer tick
+2022-02-21 16:30:42.527358 [Info]:timer tick
+2022-02-21 16:30:47.527421 [Info]:timer tick
+2022-02-21 16:33:35.950702 [Info]:timer tick
+2022-02-21 16:33:40.950909 [Info]:timer tick
+2022-02-21 16:33:45.951122 [Info]:timer tick
+2022-02-21 16:33:50.951372 [Info]:timer tick
+2022-02-21 16:33:55.951652 [Info]:timer tick
+2022-02-21 16:34:00.951860 [Info]:timer tick
+2022-02-21 16:34:05.952058 [Info]:timer tick
+2022-02-21 16:34:10.952293 [Info]:timer tick
+2022-02-21 16:34:15.952495 [Info]:timer tick
