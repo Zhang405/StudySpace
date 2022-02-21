@@ -297,7 +297,7 @@ void xzmjx::WebServer::DealRead(int sockfd)
     }
     else
     {
-        if (_M_users[sockfd].Write())
+        if (_M_users[sockfd].ReadOnce())
         {
             LOG_INFO("deal with the client(%s)", inet_ntoa(_M_users[sockfd].GetAddr()->sin_addr));
             _M_pool->append_p(_M_users + sockfd);

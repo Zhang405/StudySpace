@@ -122,7 +122,7 @@ namespace xzmjx{
             {
                 if (0 == request->m_state)
                 {
-                    if (request->Write())
+                    if (request->ReadOnce())
                     {
                         request->improv = 1;
                         SQLConnRAII mysqlcon(m_connPool);

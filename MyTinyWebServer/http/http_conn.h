@@ -68,6 +68,7 @@ namespace xzmjx
         void Init(int sockfd,const sockaddr_in &addr,char*,int,int,std::string user,std::string passwd,std::string sqlname);
         void CloseConnection(bool realClose = true);
         void Process();
+        bool ReadOnce();
         bool Write();
         sockaddr_in* GetAddr()
         {

@@ -353,6 +353,47 @@ namespace xzmjx
         }
         return NO_REQUEST;
     }
+    bool HttpConn::ReadOnce(){
+        if (_M_read_idx >= READ_BUFFER_SIZE)
+        {
+            return false;
+        }
+        int bytes_read = 0;
+
+        //LT读取数据
+        if (0 == _M_TRIGMode)
+        {
+            bytes_read = recv(_M_sockfd, _M_read_buf + _M_read_idx, READ_BUFFER_SIZE - _M_read_idx, 0);
+            _M_read_idx += bytes_read;
+
+            if (bytes_read <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        //ET读数据
+        else
+        {
+            while (true)
+            {
+                bytes_read = recv(_M_sockfd, _M_read_buf + _M_read_idx, READ_BUFFER_SIZE - _M_read_idx, 0);
+                if (bytes_read == -1)
+                {
+                    if (errno == EAGAIN || errno == EWOULDBLOCK)
+                        break;
+                    return false;
+                }
+                else if (bytes_read == 0)
+                {
+                    return false;
+                }
+                _M_read_idx += bytes_read;
+            }
+            return true;
+        }
+    }
     HttpConn::HTTP_CODE HttpConn::ParseContent(char *text)
     {
         if(_M_read_idx >= (_M_content_len+=_M_check_idx))
