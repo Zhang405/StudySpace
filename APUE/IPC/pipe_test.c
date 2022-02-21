@@ -3,6 +3,13 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
+
+void handle(int sig){
+    write(1,"SigPipe\n",8);
+}
+
+
 
 int main()
 {
@@ -23,6 +30,7 @@ int main()
 
     if(pid == 0)  //子
     {
+        signal(SIGPIPE,handle);
         close(fd[0]);
         write(fd[1],"Hello World\n",12);
         close(fd[1]);
@@ -31,10 +39,10 @@ int main()
     else
     {
         close(fd[1]);
-        char line[1024];
-        int n = read(fd[0],line,1024);
+        //char line[1024];
+        //int n = read(fd[0],line,1024);
         close(fd[0]);
-        write(1,line,n);
+        //write(1,line,n);
         wait(NULL);
     }
     exit(0);
