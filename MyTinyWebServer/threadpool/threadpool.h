@@ -68,30 +68,30 @@ namespace xzmjx{
     template <typename T>
     bool threadpool<T>::append(T *request, int state)
     {
-        m_queuelocker.lock();
+        m_queuelocker.Lock();
         if (m_workqueue.size() >= m_max_requests)
         {
-            m_queuelocker.unlock();
+            m_queuelocker.UnLock();
             return false;
         }
         request->m_state = state;
         m_workqueue.push_back(request);
-        m_queuelocker.unlock();
-        m_queuestat.post();
+        m_queuelocker.UnLock();
+        m_queuestat.Post();
         return true;
     }
     template <typename T>
     bool threadpool<T>::append_p(T *request)
     {
-        m_queuelocker.lock();
+        m_queuelocker.Lock();
         if (m_workqueue.size() >= m_max_requests)
         {
-            m_queuelocker.unlock();
+            m_queuelocker.UnLock();
             return false;
         }
         m_workqueue.push_back(request);
-        m_queuelocker.unlock();
-        m_queuestat.post();
+        m_queuelocker.UnLock();
+        m_queuestat.Post();
         return true;
     }
     template <typename T>
@@ -106,27 +106,28 @@ namespace xzmjx{
     {
         while (true)
         {
-            m_queuestat.wait();
-            m_queuelocker.lock();
+            m_queuestat.Wait();
+            m_queuelocker.Lock();
             if (m_workqueue.empty())
             {
-                m_queuelocker.unlock();
+                m_queuelocker.UnLock();
                 continue;
             }
             T *request = m_workqueue.front();
             m_workqueue.pop_front();
-            m_queuelocker.unlock();
+            m_queuelocker.UnLock();
             if (!request)
                 continue;
             if (1 == m_actor_model)
             {
                 if (0 == request->m_state)
                 {
-                    if (request->read_once())
+                    if (request->Write())
                     {
                         request->improv = 1;
-                        SQLConnRAII mysqlcon(&request->mysql, m_connPool);
-                        request->process();
+                        SQLConnRAII mysqlcon(m_connPool);
+                        request->mysql = mysqlcon.SQLConn();
+                        request->Process();
                     }
                     else
                     {
@@ -136,7 +137,7 @@ namespace xzmjx{
                 }
                 else
                 {
-                    if (request->write())
+                    if (request->Write())
                     {
                         request->improv = 1;
                     }
@@ -149,8 +150,9 @@ namespace xzmjx{
             }
             else
             {
-                SQLConnRAII mysqlcon(&request->mysql, m_connPool);
-                request->process();
+                SQLConnRAII mysqlcon(m_connPool);
+                request->mysql = mysqlcon.SQLConn();
+                request->Process();
             }
         }
     }
