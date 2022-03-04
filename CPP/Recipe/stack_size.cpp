@@ -1,5 +1,6 @@
 #include<iostream>
 #include<stdio.h>
+#include<pthread.h>
 using namespace std;
 
 int i = 1;
@@ -9,7 +10,15 @@ void func(){
     i++;
     func();
 }
-int main(){
+void* thread_f(void*arg){
     func();
+    pthread_exit(NULL);
+}
+int main(){
+    //func();
+    pthread_t tid;
+    pthread_create(&tid,NULL,thread_f,nullptr);
+
+    pthread_join(tid,nullptr);
     return 0;
 }
